@@ -1,7 +1,6 @@
 package auditor
 
 import (
-	"strings"
 	"time"
 )
 
@@ -18,10 +17,3 @@ type Logs struct {
 }
 
 // MaskString masks a string by replacing characters with asterisks,
-func MaskString(s string) string {
-	n := len(s)
-	if n < 4 {
-		return strings.Repeat("*", n)
-	}
-	return s[:2] + strings.Repeat("*", n-4) + s[n-2:]
-}
