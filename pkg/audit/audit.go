@@ -24,10 +24,11 @@ func (c *auditorClient) AddLogs(logs Logs) error {
 	return err
 }
 
-func NewAuditClient(db *sql.DB, table string) AuditClient {
+func NewAuditClient(db *sql.DB, table, service string) AuditClient {
 	return &auditorClient{
-		client: db,
-		table:  table,
+		client:  db,
+		table:   table,
+		service: service,
 	}
 }
 
