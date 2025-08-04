@@ -11,7 +11,6 @@ type Logs struct {
 	Request    any       `json:"request"`
 	Response   any       `json:"response"`
 	CreatedAt  time.Time `json:"created_at"`
-	TimeEnded  time.Time `json:"timeEnded"`
 	Duration   int64     `json:"duration"`
 	Provider   string    `json:"provider"`
 }

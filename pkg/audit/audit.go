@@ -17,10 +17,10 @@ type auditorClient struct {
 
 func (c *auditorClient) AddLogs(logs Logs) error {
 	query := `
-		INSERT INTO ` + c.table + ` (path, requestId, statusCode, request, response, created_at, timeEnded, duration, provider, service)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+		INSERT INTO ` + c.table + ` (path, request_id, status_code, request, response, created_at, duration_ms, provider, service)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 	`
-	_, err := c.client.Exec(query, logs.Path, logs.RequestID, logs.StatusCode, logs.Request, logs.Response, logs.CreatedAt, logs.TimeEnded, logs.Duration, logs.Provider, c.service)
+	_, err := c.client.Exec(query, logs.Path, logs.RequestID, logs.StatusCode, logs.Request, logs.Response, logs.CreatedAt, logs.Duration, logs.Provider, c.service)
 	return err
 }
 
