@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"strings"
+
+	http_models "github.com/onmetahq/meta-http/pkg/models"
 )
 
 type AuditClient interface {
@@ -22,6 +24,25 @@ func toJSON(v any) string {
 		return err.Error()
 	}
 	return string(b)
+}
+
+func CastError(err error) map[string]any {
+	if err == nil {
+		return map[string]any{}
+	}
+
+	errInfo, ok := err.(*http_models.HttpClientErrorResponse)
+	if !ok {
+		newErr := map[string]any{"error": err.Error()}
+		return newErr
+	}
+	newErr := make(map[string]any)
+	err = json.Unmarshal([]byte(errInfo.Err.Message), &newErr)
+	if err != nil {
+		newErr := map[string]any{"error": errInfo.Err.Message}
+		return newErr
+	}
+	return newErr
 }
 
 func (c *auditorClient) AddLogs(logs Logs) error {
